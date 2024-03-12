@@ -4,7 +4,7 @@
 # ibus-anthy - The Anthy engine for IBus
 #
 # Copyright (c) 2007-2008 Peng Huang <shawn.p.huang@gmail.com>
-# Copyright (c) 2010-2023 Takao Fujiwara <takao.fujiwara1@gmail.com>
+# Copyright (c) 2010-2024 Takao Fujiwara <takao.fujiwara1@gmail.com>
 # Copyright (c) 2007-2018 Red Hat, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -1971,7 +1971,9 @@ class Engine(IBus.EngineSimple):
            state & hex_mod_mask == hex_mod_mask:
             return True
 
-        if state & (IBus.ModifierType.CONTROL_MASK | IBus.ModifierType.MOD1_MASK):
+        if state & (IBus.ModifierType.CONTROL_MASK | \
+                    IBus.ModifierType.MOD1_MASK | \
+                    IBus.ModifierType.MOD4_MASK):
             return False
 
         if (IBus.KEY_exclam <= keyval <= IBus.KEY_asciitilde or
