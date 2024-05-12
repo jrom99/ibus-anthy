@@ -77,7 +77,13 @@ class AnthyTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        IBus.init()
+        # Already called in ibus/client/gtk3/ibusim.c:im_module_init().
+        # Otherwise infinit g_resources_register_unlocked() happens in
+        # register_lazy_static_resources_unlocked()
+        # from g_resources_lookup_data()
+        # or IBus.init() could be called before Gdk.Display.open('') is called.
+        #IBus.init()
+        pass
 
     def setUp(self):
         self.__id = 0
