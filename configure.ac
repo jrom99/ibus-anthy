@@ -37,9 +37,9 @@ m4_define([ibus_anthy_version],
 m4_define([ibus_required_version], [1.5.0])
 m4_define([glib_required_version], [2.26.0])
 
-AC_INIT([ibus-anthy], [ibus_anthy_version], [https://github.com/ibus/ibus-anthy/issues],[ibus-anthy])
+AC_INIT([ibus-anthy],[ibus_anthy_version],[https://github.com/ibus/ibus-anthy/issues],[ibus-anthy])
 AM_INIT_AUTOMAKE([1.10])
-AC_GNU_SOURCE
+AC_USE_SYSTEM_EXTENSIONS
 
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
@@ -53,7 +53,15 @@ AC_DISABLE_STATIC
 AC_PROG_CC
 AM_PROG_CC_C_O
 AC_PROG_CXX
-AC_HEADER_STDC
+m4_warn([obsolete],
+[The preprocessor macro `STDC_HEADERS' is obsolete.
+  Except in unusual embedded environments, you can safely include all
+  ISO C90 headers unconditionally.])dnl
+# Autoupdate added the next two lines to ensure that your configure
+# script's behavior did not change.  They are probably safe to remove.
+AC_CHECK_INCLUDES_DEFAULT
+AC_PROG_EGREP
+
 LT_INIT
 
 dnl - For dislpay Date
@@ -88,24 +96,21 @@ GOBJECT_INTROSPECTION_REQUIRE([0.6.8])
 
 dnl - check libanthy directory
 AC_ARG_WITH(anthygobject-libdir,
-           [AC_HELP_STRING([--with-anthygobject-libdir=PATH],
-                           [file path of libanthygobject.so])],
+           [AS_HELP_STRING([--with-anthygobject-libdir=PATH],[file path of libanthygobject.so])],
            [ANTHY_GOBJECT_LIBDIR="$withval"],
            [ANTHY_GOBJECT_LIBDIR='$(libdir)'])
 AC_SUBST(ANTHY_GOBJECT_LIBDIR)
 
 dnl - check anthygir directory
 AC_ARG_WITH(anthygoject-girdir,
-           [AC_HELP_STRING([--with-anthygobject-girdir=PATH],
-                           [file path of anthy.gir])],
+           [AS_HELP_STRING([--with-anthygobject-girdir=PATH],[file path of anthy.gir])],
            [ANTHY_GOBJECT_GIRDIR="$withval"],
            [ANTHY_GOBJECT_GIRDIR='$(datadir)/gir-1.0'])
 AC_SUBST(ANTHY_GOBJECT_GIRDIR)
 
 dnl - check anthygir directory
 AC_ARG_WITH(anthygobject-typelibsdir,
-           [AC_HELP_STRING([--with-anthygobject-typelibsdir=PATH],
-                           [file path of anthy.typelibs])],
+           [AS_HELP_STRING([--with-anthygobject-typelibsdir=PATH],[file path of anthy.typelibs])],
            [ANTHY_GOBJECT_TYPELIBSDIR="$withval"],
            [ANTHY_GOBJECT_TYPELIBSDIR='$(libdir)/girepository-1.0'])
 AC_SUBST(ANTHY_GOBJECT_TYPELIBSDIR)
@@ -178,8 +183,7 @@ fi
 dnl - engine-env
 AC_MSG_CHECKING([what are the enviroments for ibus-engine-anthy])
 AC_ARG_WITH(engine-env,
-           [AC_HELP_STRING([--engine-env=ENVIRONMENTS],
-                           [ibus-engine-anthy environments likes
+           [AS_HELP_STRING([--engine-env=ENVIRONMENTS],[ibus-engine-anthy environments likes
                             "LD_LIBRARY_PATH=/usr/lib/anthy" for libanthy.so.
                             default is none])],
            [engine_env="$withval"],
@@ -233,8 +237,7 @@ fi
 
 dnl - check file path of Anthy zipcode.t
 AC_ARG_WITH(anthy-zipcode,
-           [AC_HELP_STRING([--with-anthy-zipcode=FILE],
-                           [file path of Anty zipcode.t])],
+           [AS_HELP_STRING([--with-anthy-zipcode=FILE],[file path of Anty zipcode.t])],
            [ANTHY_ZIPCODE_FILE="$withval"],
            [ANTHY_ZIPCODE_FILE="$datadir/$ANTHY_PC/zipcode.t"])
 test "x$prefix" = xNONE && prefix=$ac_default_prefix
@@ -245,16 +248,14 @@ AM_CONDITIONAL([ENABLE_ZIPCODE], [test -f "$ANTHY_ZIPCODE_FILE" ])
 
 dnl - check file path of kasumi bin
 AC_ARG_WITH(kasumi-exec,
-           [AC_HELP_STRING([--with-kasumi-exec=FILE],
-                           [file path of kasumi bin])],
+           [AS_HELP_STRING([--with-kasumi-exec=FILE],[file path of kasumi bin])],
            [KASUMI_EXEC_FILE="$withval"],
            [KASUMI_EXEC_FILE="$bindir/kasumi"])
 AC_SUBST(KASUMI_EXEC_FILE)
 
 dnl - check file path of kasumi icon
 AC_ARG_WITH(kasumi-icon,
-           [AC_HELP_STRING([--with-kasumi-icon=FILE],
-                           [file path of kasumi icon])],
+           [AS_HELP_STRING([--with-kasumi-icon=FILE],[file path of kasumi icon])],
            [KASUMI_ICON_FILE="$withval"],
            [KASUMI_ICON_FILE="$datadir/pixmaps/kasumi.png"])
 AC_SUBST(KASUMI_ICON_FILE)
@@ -266,8 +267,7 @@ dnl - check preference icon name
 # https://github.com/ibus/ibus/commit/dd6acfa5013b
 # Otherwise you can specify the preference icon for your desktop.
 AC_ARG_WITH(icon-preference,
-           [AC_HELP_STRING([--with-icon-preference=ICON_NAME],
-                           [preference icon name.])],
+           [AS_HELP_STRING([--with-icon-preference=ICON_NAME],[preference icon name.])],
            [ICON_PREFERENCE="$withval"],
            [ICON_PREFERENCE='preferences-desktop'])
 AC_SUBST(ICON_PREFERENCE)
@@ -289,8 +289,7 @@ fi
 
 dnl - check on-off keys
 AC_ARG_WITH(on-off-keys,
-           [AC_HELP_STRING([--with-on-off-keys="'KEY1','KEY2',..."],
-                           [Anthy default on-off keys. default="
+           [AS_HELP_STRING([--with-on-off-keys="'KEY1','KEY2',..."],[Anthy default on-off keys. default="
                             'Zenkaku_Hankaku', 'Ctrl+J'".])],
            [ON_OFF_KEYS="$withval"],
            [ON_OFF_KEYS="'Zenkaku_Hankaku', 'Ctrl+J'"])
@@ -299,8 +298,7 @@ AC_SUBST(ON_OFF_KEYS)
 dnl - check hotkeys for ibus-anthy which is used for ibus bridge mode.
 dnl - Normally you don't need this so could be HOTKEYS="no"
 AC_ARG_WITH(hotkeys,
-           [AC_HELP_STRING([--with-hotkeys=HOTKEYS],
-                   [Use hotkeys for ibus bridge mode. (available value: yes/no/keys)])],
+           [AS_HELP_STRING([--with-hotkeys=HOTKEYS],[Use hotkeys for ibus bridge mode. (available value: yes/no/keys)])],
            [HOTKEYS="$withval"],
            [HOTKEYS="no"])
 if test x"$HOTKEYS" = x"no"; then
@@ -386,8 +384,7 @@ AC_SUBST(ICON_PROP_KEY_XML)
 
 dnl - set ibus-anthy layout
 AC_ARG_WITH(layout,
-           [AC_HELP_STRING([--with-layout=LAYOUT],
-                           [Define the layout. the default is 'jp'.
+           [AS_HELP_STRING([--with-layout=LAYOUT],[Define the layout. the default is 'jp'.
                             Probably you could set 'default'.])],
            [LAYOUT="$withval"],
            [LAYOUT="jp"])
