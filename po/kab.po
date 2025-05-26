@@ -5,14 +5,15 @@
 #
 # ButterflyOfFire <butterflyoffire@users.noreply.translate.fedoraproject.org>, 2024.
 # Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2025.
+# Moonshadow <starlight@users.noreply.translate.fedoraproject.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: ibus-anthy 1.5.15\n"
 "Report-Msgid-Bugs-To: https://github.com/ibus/ibus-anthy/issues\n"
 "POT-Creation-Date: 2023-08-22 13:02+0900\n"
-"PO-Revision-Date: 2025-04-29 11:46+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
+"PO-Revision-Date: 2025-05-26 07:36+0000\n"
+"Last-Translator: Moonshadow "
+"<starlight@users.noreply.translate.fedoraproject.org>\n"
 "Language-Team: Kabyle <https://translate.fedoraproject.org/projects/ibus/"
 "ibus-anthy/kab/>\n"
 "Language: kab\n"
@@ -777,7 +778,7 @@ msgstr "Kkes (_D)"
 
 #: setup/python2/setup.ui:1808 setup/python3/setup.ui:1808
 msgid "_Up"
-msgstr ""
+msgstr "_Usawen"
 
 #: setup/python2/setup.ui:1810 setup/python2/setup.ui:1827
 #: setup/python3/setup.ui:1810 setup/python3/setup.ui:1827
@@ -786,7 +787,7 @@ msgstr ""
 
 #: setup/python2/setup.ui:1825 setup/python3/setup.ui:1825
 msgid "_Down"
-msgstr ""
+msgstr "Ukessar (_D)"
 
 #: setup/python2/setup.ui:1852 setup/python3/setup.ui:1852
 msgid "<b>Extended Dictionaries</b>"
