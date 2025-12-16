@@ -29,7 +29,7 @@ import signal
 import sys
 from gettext import dgettext
 
-from main import get_userhome
+from main import get_userhome, ibus_check_version
 
 try:
     from locale import getpreferredencoding
@@ -166,7 +166,7 @@ class Engine(IBus.EngineSimple):
             self.__is_utf8 = False
         self.__has_update_preedit_text_with_mode = True
         try:
-            self.__ibus_check_version('1.3')
+            ibus_check_version('1.3')
         except ValueError as e:
             printerr('Disable update_preedit_text_with_mode(): %s' % str(e))
             self.__has_update_preedit_text_with_mode = False
@@ -204,14 +204,6 @@ class Engine(IBus.EngineSimple):
         # use reset to init values
         self.__reset()
 
-
-    def __ibus_check_version(self, v):
-        major = IBus.MAJOR_VERSION
-        minor = IBus.MINOR_VERSION
-        micro = IBus.MICRO_VERSION
-        if (major, minor, micro) < tuple(map(int, (v.split('.')))):
-            raise ValueError('Required ibus %s but version of ibus is ' \
-                             '%d.%d.%d' % (v, major, minor, micro))
 
     # http://en.sourceforge.jp/ticket/browse.php?group_id=14&tid=33075
     def __verify_anthy_journal_file(self):

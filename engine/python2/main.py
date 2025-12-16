@@ -42,10 +42,32 @@ from gi.repository import IBus
 
 import _config as config
 
+
+def ibus_check_version(v):
+    major = IBus.MAJOR_VERSION
+    minor = IBus.MINOR_VERSION
+    micro = IBus.MICRO_VERSION
+    if (major, minor, micro) < tuple(map(int, (v.split('.')))):
+        raise ValueError('Required ibus %s but version of ibus is ' \
+                         '%d.%d.%d' % (v, major, minor, micro))
+
+
 # Need to call IBus.init() before IBus.EngineSimple() is loaded.
 # factory -> engine -> IBus.EngineSimple
-IBus.init()
+try:
+    # IBus.init() has not been needed here since IBus 1.5.32
+    ibus_check_version("1.5.32")
+except ValueError:
+    import inspect
+    parent_frame = inspect.currentframe().f_back
+    # Call IBus.init() again from "from main import get_userhome" in engin.py.
+    # The twice IBus.init() issue has been fixed since IBus 1.5.31 by
+    # https://github.com/ibus/ibus/commit/9f50b46
+    if parent_frame == None:
+        IBus.init()
+
 import factory
+
 
 class IMApp:
     def __init__(self, exec_by_ibus):
