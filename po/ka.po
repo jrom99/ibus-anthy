@@ -4,7 +4,7 @@
 # This file is distributed under the same license as the ibus-anthy package.
 #
 # Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2022.
-# Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2024.
+# Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2024, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: ibus-anthy 1.5.10\n"
@@ -36,6 +36,16 @@ msgid ""
 "They are necessary because these contain too many characters to simply be "
 "laid out on a traditional keyboard."
 msgstr ""
+
+#: data/ibus-anthy.appdata.xml.in:21
+#, fuzzy
+#| msgid "Japanese input method"
+msgid "input-method"
+msgstr "შეყვანის იაპონური მეთოდი"
+
+#: data/ibus-anthy.appdata.xml.in:22
+msgid "Japanese"
+msgstr "იაპონური"
 
 #: engine/python2/default.inputMethod.xml.in.in:13
 #: engine/python3/default.inputMethod.xml.in.in:13
@@ -578,7 +588,7 @@ msgstr ""
 
 #: setup/python2/setup.ui:332 setup/python3/setup.ui:332
 msgid "<b>Initial Setting</b>"
-msgstr ""
+msgstr "<b>საწყისი მდგომარეობა</b>"
 
 #: setup/python2/setup.ui:381 setup/python3/setup.ui:381
 msgid "<b>Menu Visibility on Status Icon</b>"
