@@ -2,7 +2,7 @@
 #
 # ibus-anthy - The Anthy engine for IBus
 #
-# Copyright (c) 2010-2021 Takao Fujiwara <takao.fujiwara1@gmail.com>
+# Copyright (c) 2010-2026 Takao Fujiwara <takao.fujiwara1@gmail.com>
 # Copyright (c) 2010-2018 Red Hat, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -18,6 +18,8 @@
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+noinst_DATA = era.stamp
 
 dicts_DATA = \
 	emoji.t \
@@ -43,6 +45,7 @@ CLEANFILES = \
         $(metainfo_DATA) \
         $(schemas_DATA) \
         emoji.t \
+        era.stamp \
         $(NULL)
 
 $(metainfo_DATA): $(metainfo_in_files) Makefile
@@ -79,14 +82,26 @@ zipcode.t: $(ANTHY_ZIPCODE_FILE)
 CLEANFILES += zipcode.t
 endif
 
+era.t: era.stamp
+
+era.stamp:
+	if test -f $(srcdir)/era.t ; then \
+	    if ! $(srcdir)/era.py --check $(srcdir)/era.t ; then \
+	        rm $(srcdir)/era.t; \
+	        $(srcdir)/era.py $(srcdir)/era.t.in \
+                    --output $(builddir)/era.t; \
+	        echo "Generate era.t"; \
+	    fi; \
+	fi; \
+	touch era.stampT; \
+	mv era.stampT era.stamp;
+
 check:
-	S_YEAR=`date '+%Y'`;                                                 \
-	M_YEAR=`echo $$S_YEAR | sed 'y/0123456789/０１２３４５６７８９/'`;   \
-	grep -q $$M_YEAR $(srcdir)/era.t;                                    \
-	if test $$? -ne 0 ; then                                             \
-	    echo "This year $$M_YEAR is not included in era.y";              \
-	    exit 1;                                                          \
-	fi;
+	if test -f $(srcdir)/era.t ; then \
+	    $(srcdir)/era.py --check $(srcdir)/era.t; \
+	else \
+	    $(srcdir)/era.py --check $(builddir)/era.t; \
+	fi
 
 install-data-hook:
 	if test -z "$(DESTDIR)"; then \
@@ -106,6 +121,8 @@ EXTRA_DIST = \
         emoji-each.t \
         emoji-emoji.t \
         era.t \
+        era.t.in \
+        era.py \
         oldchar.t \
         symbol.t \
         zipcode-textdic.py \
