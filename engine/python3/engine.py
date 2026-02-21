@@ -4,7 +4,7 @@
 # ibus-anthy - The Anthy engine for IBus
 #
 # Copyright (c) 2007-2008 Peng Huang <shawn.p.huang@gmail.com>
-# Copyright (c) 2010-2025 Takao Fujiwara <takao.fujiwara1@gmail.com>
+# Copyright (c) 2010-2026 Takao Fujiwara <takao.fujiwara1@gmail.com>
 # Copyright (c) 2007-2018 Red Hat, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -1392,8 +1392,14 @@ class Engine(IBus.EngineSimple):
                     self.__lookup_table_visible = False
             elif self.__segments[self.__cursor_pos][0] != \
                     NTH_UNCONVERTED_CANDIDATE:
-                buf = self.__context.get_segment(self.__cursor_pos,
-                                                 NTH_UNCONVERTED_CANDIDATE)
+                # Test case: Type "watashi", Tab, Backspace
+                if self.__convert_mode == CONV_MODE_PREDICTION:
+                    # self.__context.get_prediction(NTH_UNCONVERTED_CANDIDATE)
+                    # is always None so use the preedit instead.
+                    buf, cursor = self.__preedit_ja_string.get_hiragana(True)
+                else:
+                    buf = self.__context.get_segment(self.__cursor_pos,
+                                                     NTH_UNCONVERTED_CANDIDATE)
                 self.__segments[self.__cursor_pos] = \
                     NTH_UNCONVERTED_CANDIDATE, buf
             #elif self._chk_mode('25'):
